@@ -1,0 +1,18 @@
+[package]
+authors = ["PFiS1737 <pfis1737@gmail.com>"]
+description = "A clock application for the terminal."
+edition = "2021"
+homepage = "https://github.cim/PFiS1737/termclock#readme"
+license = "MIT"
+name = "termclock"
+repository = "https://github.cim/PFiS1737/termclock"
+version = "0.1.0"
+
+[dependencies]
+anyhow = "1.0.94"
+chrono = "0.4.39"
+clap = { version = "4.5.23", features = ["derive"] }
+clap_complete = "4.5.39"
+colored = "2.2.0"
+console = "0.15.10"
+crossterm = "0.28.1"
