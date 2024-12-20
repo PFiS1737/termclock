@@ -41,7 +41,7 @@ impl Time {
         self,
         color_config: ColorConfig,
         scale: Option<u8>,
-        with_seconds: bool,
+        disable_seconds: bool,
         one_position: OnePosition,
     ) -> Result<Vec<String>> {
         let (width, height) = size()?;
@@ -53,7 +53,7 @@ impl Time {
         let scale = scale.unwrap_or((width / 51).min(height / 5) as u8) as usize;
         let mut rainbow_index = 0;
 
-        Ok((if with_seconds {
+        Ok((if !disable_seconds {
             format!("{:02}:{:02}:{:02}", self.hours, self.minutes, self.seconds)
         } else {
             format!("{:02}:{:02}", self.hours, self.minutes)

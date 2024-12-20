@@ -35,7 +35,7 @@ fn main() -> Result<()> {
         Commands::Clock {
             rainbow_mode,
             scale,
-            with_seconds,
+            disable_seconds,
             one_position,
             with_date,
             date_format,
@@ -46,7 +46,7 @@ fn main() -> Result<()> {
             clock(
                 color_config,
                 scale,
-                with_seconds,
+                disable_seconds,
                 one_position,
                 with_date,
                 date_format,

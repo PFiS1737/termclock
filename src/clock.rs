@@ -7,7 +7,7 @@ use crate::{app::App, cli::OnePosition, color::ColorConfig, time::Time, Result};
 pub fn clock(
     color_config: ColorConfig,
     scale: Option<u8>,
-    with_seconds: bool,
+    disable_seconds: bool,
     one_position: OnePosition,
     with_date: bool,
     date_format: String,
@@ -20,7 +20,8 @@ pub fn clock(
         || -> Result<()> {
             clock.update();
 
-            let lines = clock.to_string_lines(color_config, scale, with_seconds, one_position)?;
+            let lines =
+                clock.to_string_lines(color_config, scale, disable_seconds, one_position)?;
 
             let (cols, rows) = size()?;
             let start_col = cols.saturating_sub(measure_text_width(&lines[0]) as u16) / 2;
@@ -73,10 +74,10 @@ impl Clock {
         &self,
         color_config: ColorConfig,
         scale: Option<u8>,
-        with_seconds: bool,
+        disable_seconds: bool,
         one_position: OnePosition,
     ) -> Result<Vec<String>> {
         self.time
-            .to_string_lines(color_config, scale, with_seconds, one_position)
+            .to_string_lines(color_config, scale, disable_seconds, one_position)
     }
 }

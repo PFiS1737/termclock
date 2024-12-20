@@ -50,7 +50,7 @@ pub enum Commands {
 
         /// Do not show seconds.
         #[arg(short = 's', long)]
-        with_seconds: bool,
+        disable_seconds: bool,
 
         /// The position of the number one in the clock to display.
         #[arg(short = '1', long, default_value = "right", value_name = "POSITION")]
