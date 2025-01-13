@@ -26,8 +26,8 @@ impl Time {
         self.seconds = now.second() as u8;
     }
 
-    // Returns somethng like this:
-    // (the '#' will be replace a ' ' with background color)
+    // Returns something like this:
+    // (the '#' will be replace to ' ' with background color)
     //
     // ###### ######      ###### ######      ######     ##
     // ##  ## ##      ##      ##     ##  ##      ##     ##
@@ -119,7 +119,7 @@ fn format_char(c: char, color: Style, scale: usize, one_position: OnePosition) -
         format!("{cell}{color}{cell}{color:#}{cell}"), // 4: "  ##  "
         format!("{cell}{cell}"),                       // 5: "    "
         format!("{cell_thin}{color}{cell}{color:#}{cell_thin}"), // 6: " ## "
-        cell_thin.to_string(),                         // 7: " "
+        cell_thin,                                     // 7: " "
     ];
 
     match c {

@@ -7,7 +7,9 @@ use std::{
 
 use crossterm::{
     cursor::{Hide, MoveTo, Show},
-    event::{poll, read, Event, KeyCode, KeyEvent},
+    event::{
+        poll, read, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEvent, MouseEvent,
+    },
     queue,
     style::Print,
     terminal::{
@@ -20,7 +22,7 @@ use crossterm::{
 use crate::Result;
 
 pub struct App {
-    pub stdout: RefCell<Stdout>,
+    stdout: RefCell<Stdout>,
 }
 
 impl App {
@@ -38,6 +40,7 @@ impl App {
         self.stdout
             .borrow_mut()
             .execute(EnterAlternateScreen)?
+            .execute(EnableMouseCapture)?
             .execute(Hide)?;
 
         Ok(())
@@ -49,6 +52,7 @@ impl App {
         self.stdout
             .borrow_mut()
             .execute(LeaveAlternateScreen)?
+            .execute(DisableMouseCapture)?
             .execute(Show)?;
 
         Ok(())
@@ -79,10 +83,11 @@ impl App {
         Ok(())
     }
 
-    pub fn run<F, K>(&self, mut func: F, mut key_events: K) -> Result<()>
+    pub fn run<F, K, M>(&self, mut func: F, mut key_events: K, mut mouse_event: M) -> Result<()>
     where
         F: FnMut() -> Result<()>,
         K: FnMut(KeyEvent) -> bool,
+        M: FnMut(MouseEvent) -> bool,
     {
         self.start()?;
 
@@ -95,8 +100,8 @@ impl App {
                 self.stdout.borrow_mut().flush()?;
 
                 if poll(Duration::from_secs(1))? {
-                    if let Event::Key(event) = read()? {
-                        match event.code {
+                    match read()? {
+                        Event::Key(event) => match event.code {
                             KeyCode::Char('q') => {
                                 break;
                             }
@@ -105,7 +110,13 @@ impl App {
                                     break;
                                 }
                             }
+                        },
+                        Event::Mouse(event) => {
+                            if !mouse_event(event) {
+                                break;
+                            }
                         }
+                        _ => {}
                     }
                 }
             }

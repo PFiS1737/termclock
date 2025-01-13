@@ -44,6 +44,7 @@ pub fn clock(
             Ok(())
         },
         |_| !screensaver_mode,
+        |_| !screensaver_mode,
     )?;
 
     Ok(())

@@ -36,5 +36,4 @@ Options:
   -F, --date-format <FORMAT>     The format of the date [default: "%Y/%m/%d %A"]
   -S, --screensaver              Screensaver mode, quit on any key
   -h, --help                     Print help
-
 ```
